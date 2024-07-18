@@ -8,7 +8,7 @@ Hi there 🥝 I'm Kiwi!
 
 I have fun breaking things and making them work in different ways. 
 
-I'm an AI Red Teamer at an AI company. 
+I'm an AI Red Teamer at an AI company in North Carolina. 
 
 You'll notice that beyond this, there isn't much else about me on this site. I give this site out to everyone, so I try to make it somewhat non-trivial for bad faith actors to act in bad faith. If you cared enough, you'll find out who I am anyways though. Good luck! 
 
