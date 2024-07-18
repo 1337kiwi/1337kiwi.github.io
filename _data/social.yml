@@ -1,0 +1,9 @@
+- title: Email
+  url: mailto:kiwi@whatismy.life
+  icon: fas fa-envelope
+- title: Twitter
+  url: https://x.com/_0xKiwi
+  icon: fab fa-twitter
+- title: GitHub
+  url: https://github.com/1337kiwi
+  icon: fab fa-github
