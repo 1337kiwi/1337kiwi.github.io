@@ -1,0 +1,28 @@
+---
+layout: default
+title: Kiwi's Perch
+---
+
+<div id="home">
+  <h1>Blog Posts</h1>
+  <ul class="posts">
+    {% for post in site.posts %}
+      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <h1>Highlighted Media</h1>
+  <ul class="posts">
+    <li><span>July 18 2024</span> &raquo; <a href="https://docs.google.com/presentation/d/1L5n6RIrzCZJUYpNCn6YpaffI53jpx6nPZWA5kNqseJ8/edit?usp=sharing">I love you! What's Your Insecurity?</a></li>
+  </ul>
+
+  <h1>Other Interviews, Talks, Etc</h1>
+  <ul class="posts">
+    <li><span>July 18 2024</span> &raquo; <a href="https://docs.google.com/presentation/d/1L5n6RIrzCZJUYpNCn6YpaffI53jpx6nPZWA5kNqseJ8/edit?usp=sharing">I love you! What's Your Insecurity?</a></li>
+  </ul>
+
+  <h1>Projects</h1>
+  <ul class="posts">
+    <li><a href="https://photonvision.org/">PhotonVision Site:</a> A cute lil site for a cute lil FRC Program</li>
+  </ul>
+</div>
