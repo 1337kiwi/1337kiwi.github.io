@@ -8,7 +8,7 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 #
-# If you need help with YAML syntax, here are some quick references for you: 
+# If you need help with YAML syntax, here are some quick references for you:
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 #
@@ -18,13 +18,13 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: kiwi
+title: Kiwi's Perch
 email: kiwi@whatismy.life
 description: >- # this means to ignore newlines until "baseurl:"
-  kiwi's perch 
+  Welcome to Kiwi's Perch!
 baseurl: "" # the subpath of your site, e.g. /blog
-url: https://1337kiwi.github.io  # the base hostname and protocol for your site, e.g. http://example.com
 domain: 1337kiwi.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
+url: "https://1337kiwi.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: _0xKiwi
 github_username:  1337kiwi
 
@@ -42,9 +42,9 @@ remote_theme: zivong/ockham
 #
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
+#
 include:
   - _pages
-
 # exclude:
 #   - .sass-cache/
 #   - .jekyll-cache/
@@ -56,7 +56,7 @@ include:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-#
+
 tag_page_layout: tag_page
 tag_page_dir: tag
 
