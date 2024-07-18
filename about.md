@@ -5,6 +5,7 @@ permalink: /about/
 ---
 
 Hi there 🥝 I'm Kiwi!
+
 I'm a student at NCSU, and an AI Red Teamer at NVIDIA in North Carolina.
 I have fun breaking things and making them work in different ways. 
 
@@ -18,4 +19,6 @@ In my free time, I enjoy:
 - Making friends with strangers.
 
 
-You matter, stranger. Let me know how I can help. kiwi @ the current URL you're on is my email
+You matter, stranger. Let me know how I can help. 
+
+kiwi @ the current URL you're on is my email <3
