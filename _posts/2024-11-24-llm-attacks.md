@@ -1,14 +1,14 @@
 ---
 layout: post
 title: On AI Inversion Attacks
-date: 2024-11-25 04:04:06 -0400
-categories: jekyll update
+date: 2024-11-24 04:04:06 -0400
+categories: ctf writeup
 ---
 
 {{ page.title }}
 ================
 
-<p class="meta">On AI Inversion Attacks - iCTF Writeup</p>
+<p class="meta">November 24 2024 - On AI Inversion Attacks - iCTF Writeup</p>
 
 # iCTF
 
@@ -59,7 +59,7 @@ class Model(torch.nn.Module):
         return x
 ```
 
-The out.png file was a file filled with what looked like static, and our model.pth stored the PyTorch state dictionary for the Model. model.pth contained the weight and bias of our model. 
+The out.png file was a file filled with what looked like static, and our model.pth stored the PyTorch state dictionary for the Model (also contained the weight and bias of our model). 
 
 ## Step 1 - Initial Thoughts
 
@@ -67,17 +67,20 @@ After downloading the file, my first step was to look at what model.py did. chal
 
 ## Step 2 - torch.nn.linear()
 
-As per the [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html), Linear() performs a Applies an affine linear transformation to the input data with the equation y = xA^T + b. `133`, in this case, defined the input and the output of the transformation. Considering that our output image was 17x133 pixels, this was interesting.
+As per the [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html), Linear() performs a Applies an affine linear transformation to the input data with the equation y = xA^T + b. 133, in this case, defined the input and the output of the transformation. Considering that our output image was 17x133 pixels, this was interesting.
 
 The following resources gave me some additional information as I researched this, allowing me to improve my understanding of nn.Linear()
-[Pytorch Documentation on torch.nn.Linear](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html)
-[Python Linear() code](https://github.com/pytorch/pytorch/blob/main/torch/nn/modules/linear.py)
-[Linear C++ implementation - this is where the code actually does things!](https://github.com/pytorch/pytorch/blob/4a15f4a902c5640f3be4d18027db4316dc11d6d9/aten/src/ATen/native/Linear.cpp#L33-L40)
-https://docs.kanaries.net/topics/Python/nn-linear
+
+[Pytorch Documentation on torch.nn.Linear](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html) \
+[Python Linear() code](https://github.com/pytorch/pytorch/blob/main/torch/nn/modules/linear.py) \
+[Linear C++ implementation - this is where the code actually does things!](https://github.com/pytorch/pytorch/blob/4a15f4a902c5640f3be4d18027db4316dc11d6d9/aten/src/ATen/native/Linear.cpp#L33-L40) \
+[Introduction to nn.Linear in PyTorch: Clearly Explained](https://docs.kanaries.net/topics/Python/nn-linear)
 
 ## Step 3 - Reversing the process
 
 My first step was reversing the process on a test image, to sanity check that the process did what I thought it did, and do figure out a method to reverse the steps to create a solve script. I used an image of 17x133 pixels, which stored a text that said ictf{this-is-fake}. 
+
+![test_flag.png]({{ site.baseurl }}/assets/ctf/ictf-2024/linear-labyrinth/test_flag.png)
 
 Then, I looked into .pth files, and specifically, model.pth. 
 
@@ -95,9 +98,10 @@ for step in steps: # For each layer in the model
     z = z[..., None] # Add a new axis to the tensor
     z = torch.linalg.pinv(step.weight) @ z # Multiply the tensor by the inverse of the weight matrix
     z = torch.squeeze(z) # Remove the new axis from the tensor
-```
+``` 
+ 
 
-## Step 4 - Back and forth
+## Step 5 - Back and forth
 
 Knowing this, I set up a test script which performed the proces in chal.py, and then reversed it, to verify that I had a good comprehension of what was going on. 
 
@@ -112,29 +116,24 @@ model.load_state_dict(torch.load('model.pth'))
 
 # Read in the output image, keep in mind we saved a float32 image
 flag = cv2.imread('testing_input.png', 0)
-
 steps = list(model.children())
-
 tensor = torch.from_numpy(flag).to(torch.float32)
 
 for step in steps:
     tensor = step(tensor)
 
 out_arr = tensor.detach().numpy()
-
 cv2.imwrite('out.png', out_arr)
 
 out = cv2.imread('out.png', 0)
 
 print('Out shape:', out.shape)
-
 print('Out dtype:', out.dtype)
-
 print('Out Contents:', out)
 
 z = torch.from_numpy(out_arr).to(torch.float32) # out_arr is not equal to out 
 
-# reversed_steps = list(model.children())[::-1] # reverse the order of the layers
+# reversed_steps = list(model.children())[::-1]
 steps = reversed(list(model.children())) # reverse the order of the layers
 
 for step in steps: # For each layer in the model
@@ -163,11 +162,13 @@ This is because I was having trouble performing this on `out`, which was read in
 
 After some research, I found that this was because opencv imwrite [actually loses float32 values on a write](https://docs.opencv.org/4.x/d4/da8/group__imgcodecs.html#ga8ac397bd09e48851665edbe12aa28f25). Specifically, "With PNG encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.". However, we're working with float32 values. Ugh. There goes my perfect script
 
-## Step 5 - Inversion Attacks
+## Step 6 - Inversion Attacks
 
 So, my perfect script doesn't work. And this challenge has solves, which means that either
-    1. We are working with a png file that doesn't contain an image at all, and rather a bunch of integers stored as a .png, OR
-    2. We need to perform another style of attack
+
+  1. We are working with a png file that doesn't contain an image at all, and rather a bunch of integers stored as a .png, 
+  OR
+  2. We need to perform another style of attack
 
 The first was easy to verify by some modification of my initial solve script, and I didn't see much luck. So, I needed to look at other attacks. My first thought was performing an inversion attack. Inversion is the process of inverting a model in order to get a lossy representation of the training data. We get a lossy representation, most of the time we run this attack on models, because a model can be viewed as a lossy compression algorithm. Most models contain only a portion of the training data, and this type of attack is actually really difficult to execute in practice. 
 
@@ -179,7 +180,7 @@ We can also use the [adversarial robustness toolbox (ART)](https://github.com/Tr
 
 A high level overview of our attack is that we'll iterate through the space of images, starting with a randomized image that is similar to out.png in size. We then use stochastic gradient descent to optimize that test image to generate an image that matches the class (hint: I forgot to clamp pixels within acceptable ranges, which made this challenge a lot hard than it should have been).
 
-## Step 6 - My attack 
+## Step 7 - My attack 
 
 ```python
 import torch
@@ -252,7 +253,9 @@ recovered_img = recovered_img.astype(np.uint8)
 cv2.imwrite('recovered_flag.png', recovered_img)
 ```
 
-And we get ![recovered_flag.png]({{ site.baseurl }}assets/ctf/ictf-2024/linear-labyrinth/recovered_flag.png)
+And we get 
+
+![recovered_flag.png]({{ site.baseurl }}/assets/ctf/ictf-2024/linear-labyrinth/recovered_flag.png)
 
 This was super overcomplicated and unneeded. But when I zoomed into the image and squinted a bit (and after a couple guesses), I got the flag, which was `ictf{linear_aggression}`
 
@@ -302,5 +305,9 @@ out_arr = input_tensor.detach().numpy()
 print(out_arr)
 cv2.imwrite('flag.png', out_arr)
 ```
+
+![better_flag.png]({{ site.baseurl }}/assets/ctf/ictf-2024/linear-labyrinth/flag_better.png)
+
+That looks much better.
 
 Yep, I forgot to clamp tensors. And I overcomplicated it, when I could have just trained a model to guess the initial flag. I had the right idea, but the wrong execution. Even though I sort of solved this, I do think that this is the much better execution.
