@@ -12,7 +12,9 @@ categories: ctf writeup
 
 # iCTF
 
-Recently, I competed in iCTF with several friends, as I was told there would be interesting and fun challenges. I was not disappointed! 
+Recently, I competed in [iCTF](https://ictf.cs.ucsb.edu/) with several friends, as I was told there would be interesting and fun challenges. I was not disappointed! 
+
+The 2024 iCTF is sponsored by the [ACTION NSF AI Institute](https://action.ucsb.edu/), and was organized by [Shellphish](https://shellphish.net/) and the [UCSB Women in Computer Science group](https://wics-ucsb.github.io).
 
 One of these challenges was called `linear-labyrinth`. 
 
