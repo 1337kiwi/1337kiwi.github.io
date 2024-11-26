@@ -23,7 +23,7 @@ The creator, 0xk4l1, is a friend of mine. We interned together before, so I was 
 
 The challenge consisted of 4 files - chal.py, model.py, out.png, and model.pth. 
 
-chal.py
+chal.py read in a flag.png file, converted it to a tensor, and then passed it through a model. The model was defined in model.py, and the output was saved as out.png. The model.pth file contained the state dictionary for the model. We also had some weird dimensions - 17x133 pixels.
 
 ```python
     import torch 
@@ -42,7 +42,7 @@ chal.py
     torch.save(model.state_dict(), 'model.pth')
 ```
 
-model.py
+model.py performed two linear transformations on the input tensor. Pretty self-explanatory. 
 
 ```python
 import torch
