@@ -1,6 +1,6 @@
 ---
 layout: post
-title: My Sword is Binja, My Shield is GEF - KnightCTF Rev Challenge Writeups
+title: Writeup - KnightCTF 2025 Rev Challenges | My Sword is Binja, My Shield is GEF 
 date: 2025-01-24 04:04:06 -0400
 tags: 
 - rev
