@@ -142,7 +142,7 @@ The AES implementation was done on an FPGA, therefore, we will use a hamming dis
 
 Both lines are symmetrical to each other. The negative graph is more likely to be the correct
 guess, because it looks more like the power trace. 
-This is key = 0x00.
+This is key = 0xSK.
 
 ### Finding the Maximum Leak Point
 
