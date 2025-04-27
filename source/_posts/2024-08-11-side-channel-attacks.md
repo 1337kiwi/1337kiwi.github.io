@@ -160,7 +160,7 @@ SKY-FLAG-DNE
 
 `0xSK 0xY1 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22`
 
-Compared to a traditional brute-force attack of AES (which takes 2^128 attempts theoretically), our reduction ratio is between 2^13 and 2^14. his is because 10,000 guesses is between 213 and 214
+Compared to a traditional brute-force attack of AES (which takes 2^128 attempts theoretically), our reduction ratio is between 2^24 and 2^254. This is because 10,000 guesses is between 2^24 and 2^25
 
 ### Prevention
 
