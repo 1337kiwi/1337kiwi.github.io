@@ -120,7 +120,7 @@ Let's take a look at the power trace itself, and the data we have in it.
 
 The peaks in the trace (both peak and trough) are the maximum leak points. 
 These peaks indicate the specific time for an adversary to retrieve the secret key. 
-These signify the 11 addRoundKey() functions in AES-128 bit encryption.
+These signify the 14 shiftRow() functions in AES-128 bit encryption.
 
 ![Leak Point Graph](/assets/dpa/1/leakpoints.png)
 
@@ -160,7 +160,7 @@ SKY-FLAG-DNE
 
 `0xSK 0xY1 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22`
 
-Compared to a traditional brute-force attack of AES (which takes 2^128 attempts theoretically), our reduction ratio is between 2^24 and 2^254. This is because 10,000 guesses is between 2^24 and 2^25
+Compared to a traditional brute-force attack of AES (which takes 2^128 attempts theoretically), our reduction ratio is between 2^24 and 2^25. This is because 10,000 guesses is between 2^24 and 2^25
 
 ### Prevention
 
