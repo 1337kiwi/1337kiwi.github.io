@@ -110,9 +110,9 @@ We can use different metrics in DPA attacks.
 
 # Hands-On Attack
 
-I wanted to get a hands-on introduction to power-based side-channel analysis. An implementation of RSA-ECB was created and I took a set of power traces during the execution, with the associated input/output values of AES, and I performed an attack to extract the 128-bit secret key via DPA. 
+I wanted to get a hands-on introduction to power-based side-channel analysis. An implementation of AES-ECB was created and I took a set of power traces during the execution, with the associated input/output values of AES, and I performed an attack to extract the 128-bit secret key via DPA. 
 
-The power traces contained 10,000 RSA-ECB executions, with random input and a fixed, secret key.
+The power traces contained 10,000 AES-ECB executions, with random input and a fixed, secret key.
 
 ## Power Trace Analysis
 
@@ -120,7 +120,7 @@ Let's take a look at the power trace itself, and the data we have in it.
 
 The peaks in the trace (both peak and trough) are the maximum leak points. 
 These peaks indicate the specific time for an adversary to retrieve the secret key. 
-These signify the 14 shiftRow() functions in RSA-256 bit encryption.
+These signify the 11 addRoundKey() functions in AES-128 bit encryption.
 
 ![Leak Point Graph](/assets/dpa/1/leakpoints.png)
 
@@ -134,7 +134,7 @@ Let’s execute the DPA attack using Pearson’s correlation test. We'll take a 
 
 ![Leak Point Graph](/assets/dpa/1/correlation.png)
 
-The RSA implementation was done on an FPGA, therefore, we will use a hamming distance power model. For each input byte, the FPGA will store the initial input, then we will perform the addRoundKey operation.
+The AES implementation was done on an FPGA, therefore, we will use a hamming distance power model. For each input byte, the FPGA will store the initial input, then we will perform the addRoundKey operation.
 
 ### Breaking Apart the Maximum Correlation into 2 
 
@@ -142,7 +142,7 @@ The RSA implementation was done on an FPGA, therefore, we will use a hamming dis
 
 Both lines are symmetrical to each other. The negative graph is more likely to be the correct
 guess, because it looks more like the power trace. 
-This is key = 0xSK.
+This is key = 0x00.
 
 ### Finding the Maximum Leak Point
 
@@ -156,11 +156,9 @@ We also see that we can figure out the key after t is approximately 1580.
 
 After applying DPA, we see that the key is 
 
-SKY-FLAG-DNE
-
-`0xSK 0xY1 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22 0x22`
-
-Compared to a traditional brute-force attack of RSA (which takes 2^128 attempts theoretically), our reduction ratio is between 2^24 and 2^25. This is because 10,000 guesses is between 2^24 and 2^25
+`0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09 0x0a 0x0b 0x0c 0x0d 0x0e 0x0f`
+ 
+Compared to a traditional brute-force attack of AES (which takes 2^128 attempts theoretically), our reduction ratio is log10​(2128)−log10​(10000) ≈ 38.53184 − 4 ≈ 34.53184
 
 ### Prevention
 
