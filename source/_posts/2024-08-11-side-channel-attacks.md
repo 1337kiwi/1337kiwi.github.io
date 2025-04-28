@@ -158,7 +158,7 @@ After applying DPA, we see that the key is
 
 `0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09 0x0a 0x0b 0x0c 0x0d 0x0e 0x0f`
  
-Compared to a traditional brute-force attack of AES (which takes 2^128 attempts theoretically), our reduction ratio is log10​(2128)−log10​(10000) ≈ 38.53184 − 4 ≈ 34.53184
+Compared to a traditional brute-force attack of AES (which takes 2^128 attempts theoretically), our reduction ratio is log10​(2^128)−log10​(10000) ≈ 38.53184 − 4 ≈ 34.53184
 
 ### Prevention
 
