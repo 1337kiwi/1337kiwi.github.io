@@ -208,7 +208,7 @@ All three challenges followed the same pattern but used different Caesar cipher 
 
 I developed a Python script to automate the solution process. The script evolved over time as I solved each challenge, and wanted things to go faster. After a lot of playing around, here is what I came up with, both initially and at the end:
 
-### Initial Script Version
+### Initial Script Version (Solved "My First CTF")
 
 ```python
 import requests
@@ -274,7 +274,7 @@ if __name__ == "__main__":
     fetch_and_rot_path_and_content(base_url, original_custom_path_input, custom_headers)
 ```
 
-### Final Optimized Script
+### Final Optimized Script (Solved "My First CTF", "My Second CTF", and "My Third CTF")
 
 ```python
 import requests
