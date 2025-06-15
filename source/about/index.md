@@ -6,7 +6,9 @@ title: About Me
 
 I have fun breaking things and making them work in different ways. 
 
-I'm an AI Red Teamer at an AI company in North Carolina. 
+I currently do vulnerability research and create CTF challenges, and build medical devices on the side (based on the NRF54L15 chip).
+
+Previously, I was on the AI Red Team as a security engineer at an AI company, and worked in embedded systems vulnerability research, specializing in novel ARM-based devices. 
 
 You'll notice that beyond this, there isn't much else about me on this site. I give this site out to everyone, so I try to make it somewhat non-trivial for bad faith actors to act in bad faith. If you cared enough, you'll find out who I am anyways though. Good luck! 
 
