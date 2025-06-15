@@ -1,6 +1,6 @@
 ---
 layout: post
-title: NahamCon CTF Writeups Pt 1
+title: Writeup - NahamCon CTF -- JS and JWT Token Exploits
 date: 2025-05-28 01:24:59
 tags: 
 - rev

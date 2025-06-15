@@ -1,6 +1,6 @@
 ---
 layout: post
-title: NahamCon CTF Writeups Pt 2
+title: Writeups NahamCon CTF -- Harder Web Challenges
 date: 2025-05-28 03:30:00
 tags: 
 - rev
