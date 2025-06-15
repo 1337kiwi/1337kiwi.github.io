@@ -16,7 +16,6 @@ tags:
 
 I fought in this war on team [Onlyfeet](https://ctftime.org/team/144644/), which I'm a part of. Yeah, I'm cool I promise. Here's some writeups, have fun. 
 
-Long live the feet lovers. 
 
 # SNAD
 
