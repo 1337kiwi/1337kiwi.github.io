@@ -7,6 +7,7 @@ tags:
 - web
 - ctf
 - writeup
+- nahamconctf
 ---
 
 <p class="meta">May 28 2024 - Web and Rev Challenges - NahamCon CTF Writeup Pt 1</p>
