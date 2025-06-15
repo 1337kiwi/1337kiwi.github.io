@@ -189,7 +189,7 @@ This "Apple Computer Inc." artifact initially seemed like it might be a clue (ap
 
 Navigating to `/flag.txt` on each challenge gave us a taunting "Ha, you wish!" response. We unfortunately spent less time than we should have thinking about this, thinking it was just a troll.
 
-![Flag.txt Response](/assets/ctf/nahamcon-2025/myctf/flag.txt.png)
+![Flag.txt Response](/assets/ctf/nahamcon-2025/myctf/flag.png)
 
 ## The Breakthrough: ROT Cipher Connection
 
@@ -347,7 +347,7 @@ The script automated the following process:
 
 The script successfully solved all three challenges by finding the correct Caesar cipher shifts for the hidden endpoints:
 
-![My Third CTF Solve](/assets/ctf/nahamcon-2025/myctf/mythirdctfsolve.png)
+![My Third CTF Solve](assets/ctf/nahamcon-2025/myctf/1.png)
 
 ## Key Takeaways
 Written with AI Support
