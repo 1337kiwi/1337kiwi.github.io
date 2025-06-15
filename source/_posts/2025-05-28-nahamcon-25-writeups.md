@@ -151,7 +151,6 @@ To trigger the traceback in the debug area, I decided to manipulate the JWT. I c
 
 ![Unix Timestamp](/assets/ctf/nahamcon-2025/infinite-queue/unix-timestamp.png)
 
-![Resigned JWT](/assets/ctf/nahamcon-2025/infinite-queue/resigned-jwt.png)
 
 When I submitted this manipulated JWT, it triggered a traceback that leaked the JWT signing key:
 
@@ -163,9 +162,12 @@ When I submitted this manipulated JWT, it triggered a traceback that leaked the 
 
 Now that I have the JWT signing key, I can properly sign a valid JWT token. I took my previously invalid JWT, resigned it with the leaked key, and then attempted to complete the purchase:
 
-![Success](/assets/ctf/nahamcon-2025/infinite-queue/success.png)
+![Resigned Key](/assets/ctf/nahamcon-2025/infinite-queue/resigned-jwt.png)
 
 Success! The purchase completed and I was able to retrieve the flag.
+
+![Success](/assets/ctf/nahamcon-2025/infinite-queue/success.png)
+
 
 ## Key Takeaways
 Written with AI Support
