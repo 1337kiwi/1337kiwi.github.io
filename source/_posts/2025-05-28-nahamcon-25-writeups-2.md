@@ -347,7 +347,7 @@ The script automated the following process:
 
 The script successfully solved all three challenges by finding the correct Caesar cipher shifts for the hidden endpoints:
 
-![My Third CTF Solve](assets/ctf/nahamcon-2025/myctf/1.png)
+![My Third CTF Solve](/assets/ctf/nahamcon-2025/myctf/1.png)
 
 ## Key Takeaways
 Written with AI Support
