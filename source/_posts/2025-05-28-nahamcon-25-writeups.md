@@ -151,12 +151,13 @@ To trigger the traceback in the debug area, I decided to manipulate the JWT. I c
 
 ![Unix Timestamp](/assets/ctf/nahamcon-2025/infinite-queue/unix-timestamp.png)
 
-
 When I submitted this manipulated JWT, it triggered a traceback that leaked the JWT signing key:
 
-![JWT Secret](/assets/ctf/nahamcon-2025/infinite-queue/jwt-secret.png)
-
 ![Leaked JWT Key](/assets/ctf/nahamcon-2025/infinite-queue/leaked-jwt-key.png)
+
+Specifically, here
+
+![JWT Secret](/assets/ctf/nahamcon-2025/infinite-queue/jwt-secret.png)
 
 ## Final Exploitation
 
