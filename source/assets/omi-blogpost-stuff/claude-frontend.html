@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @font-face {
+      font-family: 'Digital';
+      src: url('https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js');
+    }
+    
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #111;
+      font-family: monospace;
+      color: #ff7e00;
+    }
+    
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    #render-canvas {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    
+    .interface-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    
+    .crt-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.12),
+        rgba(0, 0, 0, 0.12) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      opacity: 0.9;
+      z-index: 5;
+      pointer-events: none;
+    }
+    
+    .crt-flicker {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(150, 255, 170, 0.02);
+      opacity: 0;
+      z-index: 4;
+      pointer-events: none;
+      animation: flicker 0.15s infinite alternate;
+    }
+    
+    @keyframes flicker {
+      0% { opacity: 0.02; }
+      100% { opacity: 0.04; }
+    }
+    
+    .header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      z-index: 10;
+    }
+    
+    .header span {
+      color: #00ffaa;
+    }
+    
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 12px;
+      z-index: 10;
+    }
+    
+    .side-label-left {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%) rotate(180deg);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 3px;
+      opacity: 0.8;
+      z-index: 10;
+      color: #00ffaa;
+    }
+    
+    .side-label-right {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      writing-mode: vertical-lr;
+      text-orientation: mixed;
+      letter-spacing: 2px;
+      opacity: 0.8;
+      z-index: 10;
+    }
+    
+    .metrics {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      text-align: right;
+      font-size: 12px;
+      z-index: 10;
+    }
+    
+    .metrics div {
+      margin-bottom: 8px;
+    }
+    
+    .warning {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: #ff0000;
+      animation: blink 2s infinite;
+      font-size: 12px;
+      z-index: 10;
+    }
+    
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+    
+    .waveform {
+      position: absolute;
+      bottom: 100px;
+      left: 50px;
+      width: calc(100% - 100px);
+      height: 100px;
+      z-index: 3;
+    }
+    
+    .terminal {
+      position: absolute;
+      top: 60px;
+      left: 50px;
+      width: 280px;
+      height: 160px;
+      border: 1px solid #ff7e00;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #ff7e00;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      overflow: hidden;
+      z-index: 10;
+    }
+    
+    .terminal-content {
+      animation: scrollText 10s linear infinite;
+    }
+    
+    @keyframes scrollText {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-200px); }
+    }
+    
+    .box {
+      position: absolute;
+      border: 1px solid rgba(255, 126, 0, 0.7);
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 3;
+    }
+    
+    .box-1 {
+      top: 60px;
+      right: 50px;
+      width: 200px;
+      height: 160px;
+    }
+    
+    .box-1::before {
+      content: "AT FIELD ANALYSIS";
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      background-color: #111;
+      padding: 0 5px;
+      font-size: 12px;
+      color: #00ffaa;
+    }
+    
+    .box-2 {
+      bottom: 80px;
+      right: 50px;
+      width: 200px;
+      height: 150px;
+    }
+    
+    .box-2::before {
+      content: "SYNC RATIO";
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      background-color: #111;
+      padding: 0 5px;
+      font-size: 12px;
+    }
+    
+    .crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      pointer-events: none;
+      z-index: 3;
+    }
+    
+    .crosshair::before,
+    .crosshair::after {
+      content: "";
+      position: absolute;
+      background-color: rgba(255, 126, 0, 0.5);
+    }
+    
+    .crosshair::before {
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+    }
+    
+    .crosshair::after {
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 100%;
+    }
+    
+    .angle-bracket {
+      position: absolute;
+      border: 1px solid #00ffaa;
+      width: 40px;
+      height: 40px;
+      z-index: 4;
+    }
+    
+    .angle-bracket-1 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-120px, -120px);
+      border-right: none;
+      border-bottom: none;
+    }
+    
+    .angle-bracket-2 {
+      top: 50%;
+      left: 50%;
+      transform: translate(80px, -120px);
+      border-left: none;
+      border-bottom: none;
+    }
+    
+    .angle-bracket-3 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-120px, 80px);
+      border-right: none;
+      border-top: none;
+    }
+    
+    .angle-bracket-4 {
+      top: 50%;
+      left: 50%;
+      transform: translate(80px, 80px);
+      border-left: none;
+      border-top: none;
+    }
+    
+    .grid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 126, 0, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 126, 0, 0.07) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    
+    #wave-canvas {
+      position: absolute;
+      bottom: 70px;
+      left: 50px;
+      z-index: 3;
+    }
+    
+    .nerv-logo {
+      position: absolute;
+      bottom: 30px;
+      right: 280px;
+      color: #ff0000;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      transform: scaleY(1.2);
+      z-index: 3;
+    }
+    
+    .circle-monitor {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 126, 0, 0.7);
+      box-shadow: 0 0 15px rgba(255, 126, 0, 0.3);
+      pointer-events: none;
+      z-index: 3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas id="render-canvas"></canvas>
+    
+    <div class="interface-overlay">
+      <div class="header">MAGI<span>-MELCHIOR</span> // 3D ANALYSIS SYSTEM v.01.13</div>
+      <div class="footer">NERV-HQ//CLASSIFIED//PATTERN:BLUE</div>
+      <div class="side-label-left">HUMANOID ENTITY</div>
+      <div class="side-label-right">ANALYSIS VIEWPORT</div>
+      
+      <div class="metrics">
+        <div id="rotation">ROT: 0.00°</div>
+        <div id="amplitude">AMP: 0.00</div>
+        <div id="coordinates">POS: X:0.00 Y:0.00 Z:0.00</div>
+        <div id="time">T: 00:00:00</div>
+      </div>
+      
+      <div class="warning">WARNING: PATTERN CLASSIFIED AS [ANGEL]</div>
+      
+      <div class="terminal">
+        <div class="terminal-content">
+          > MAGI SYSTEM ONLINE
+          > INITIATING SCAN...
+          > TARGET ACQUIRED [PATTERN:BLUE]
+          > HARMONICS ANALYSIS UNDERWAY
+          > CALCULATING AT FIELD RESONANCE
+          > SYNCHRONIZATION AT 87.2%
+          > WARNING: ANGEL SIGNATURE DETECTED
+          > CROSS-REFERENCING DATABASE...
+          > MATCH FOUND: [REDACTED]
+          > INITIATING COUNTER-MEASURES
+          > PREPARING EVA UNITS FOR DEPLOYMENT
+          > TACTICAL ASSESSMENT: [HIGH RISK]
+          > COMMANDER IKARI NOTIFIED
+          > TOKYO-3 DEFENSE SYSTEMS ENGAGED
+          > EVACUATION ROUTES CALCULATED
+          > TERMINAL DOGMA SECURITY INCREASED
+          > ...
+        </div>
+      </div>
+      
+      <div class="box box-1">
+        <canvas id="at-field-canvas" width="198" height="158"></canvas>
+      </div>
+      
+      <div class="box box-2">
+        <canvas id="sync-canvas" width="198" height="148"></canvas>
+      </div>
+      
+      <canvas id="wave-canvas" width="600" height="100"></canvas>
+      
+      <div class="crosshair"></div>
+      <div class="angle-bracket angle-bracket-1"></div>
+      <div class="angle-bracket angle-bracket-2"></div>
+      <div class="angle-bracket angle-bracket-3"></div>
+      <div class="angle-bracket angle-bracket-4"></div>
+      
+      <div class="circle-monitor"></div>
+      <div class="nerv-logo">NERV</div>
+      
+      <div class="grid-overlay"></div>
+      <div class="crt-effect"></div>
+      <div class="crt-flicker"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Initialize Three.js scene
+    const canvas = document.getElementById('render-canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    // Create sphere geometry
+    const geometry = new THREE.SphereGeometry(2, 32, 32);
+    
+    // Create wireframe material with glow
+    const wireframeMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0x00ffaa, 
+      wireframe: true, 
+      transparent: true,
+      opacity: 0.8
+    });
+    
+    // Create inner sphere with solid material
+    const innerMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0xff7e00, 
+      transparent: true,
+      opacity: 0.2
+    });
+    
+    // Create both spheres
+    const wireframeSphere = new THREE.Mesh(geometry, wireframeMaterial);
+    scene.add(wireframeSphere);
+    
+    const innerSphere = new THREE.Mesh(geometry, innerMaterial);
+    innerSphere.scale.set(0.95, 0.95, 0.95);
+    scene.add(innerSphere);
+    
+    // Add ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    
+    // Position camera
+    camera.position.z = 5;
+    
+    // Timing variables
+    let startTime = new Date();
+    let totalFrames = 0;
+    
+    // AT field canvas
+    const atFieldCanvas = document.getElementById('at-field-canvas');
+    const atCtx = atFieldCanvas.getContext('2d');
+    
+    // Sync ratio canvas
+    const syncCanvas = document.getElementById('sync-canvas');
+    const syncCtx = syncCanvas.getContext('2d');
+    
+    // Wave canvas
+    const waveCanvas = document.getElementById('wave-canvas');
+    const waveCtx = waveCanvas.getContext('2d');
+    
+    // Update timing display
+    function updateTime() {
+      const now = new Date();
+      const diff = now - startTime;
+      const hours = Math.floor(diff / 3600000).toString().padStart(2, '0');
+      const minutes = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+      const seconds = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+      document.getElementById('time').innerText = `T: ${hours}:${minutes}:${seconds}`;
+    }
+    
+    // Animation variables
+    let rotation = 0;
+    let amplitude = 0;
+    let phaseOffset = 0;
+    let glitchIntensity = 0;
+    let lastGlitchTime = 0;
+    
+    // Draw AT field hexagon pattern
+    function drawATField(timestamp) {
+      atCtx.clearRect(0, 0, atFieldCanvas.width, atFieldCanvas.height);
+      
+      const centerX = atFieldCanvas.width / 2;
+      const centerY = atFieldCanvas.height / 2;
+      const size = 60 + Math.sin(timestamp * 0.001) * 5;
+      
+      // Draw outer hexagons
+      for (let i = 0; i < 3; i++) {
+        const hexSize = size - i * 15;
+        atCtx.beginPath();
+        for (let j = 0; j < 6; j++) {
+          const angle = (j * Math.PI / 3) + (timestamp * 0.0003);
+          const x = centerX + hexSize * Math.cos(angle);
+          const y = centerY + hexSize * Math.sin(angle);
+          
+          if (j === 0) {
+            atCtx.moveTo(x, y);
+          } else {
+            atCtx.lineTo(x, y);
+          }
+        }
+        atCtx.closePath();
+        atCtx.strokeStyle = i === 0 ? '#00ffaa' : '#ff7e00';
+        atCtx.lineWidth = 1;
+        atCtx.stroke();
+      }
+      
+      // Draw inner pattern
+      atCtx.beginPath();
+      const innerRadius = 20 + Math.sin(timestamp * 0.002) * 5;
+      atCtx.arc(centerX, centerY, innerRadius, 0, Math.PI * 2);
+      atCtx.strokeStyle = '#ff0000';
+      atCtx.lineWidth = 1;
+      atCtx.stroke();
+      
+      // Draw cross
+      atCtx.beginPath();
+      atCtx.moveTo(centerX - 40, centerY);
+      atCtx.lineTo(centerX + 40, centerY);
+      atCtx.moveTo(centerX, centerY - 40);
+      atCtx.lineTo(centerX, centerY + 40);
+      atCtx.strokeStyle = 'rgba(255, 126, 0, 0.5)';
+      atCtx.lineWidth = 1;
+      atCtx.stroke();
+    }
+    
+    // Draw sync ratio graph
+    function drawSyncRatio(timestamp) {
+      syncCtx.clearRect(0, 0, syncCanvas.width, syncCanvas.height);
+      
+      // Draw grid
+      syncCtx.strokeStyle = 'rgba(255, 126, 0, 0.3)';
+      syncCtx.lineWidth = 1;
+      
+      for (let i = 0; i < syncCanvas.width; i += 20) {
+        syncCtx.beginPath();
+        syncCtx.moveTo(i, 0);
+        syncCtx.lineTo(i, syncCanvas.height);
+        syncCtx.stroke();
+      }
+      
+      for (let i = 0; i < syncCanvas.height; i += 20) {
+        syncCtx.beginPath();
+        syncCtx.moveTo(0, i);
+        syncCtx.lineTo(syncCanvas.width, i);
+        syncCtx.stroke();
+      }
+      
+      // Draw sync graph
+      syncCtx.beginPath();
+      syncCtx.moveTo(0, syncCanvas.height / 2);
+      
+      for (let x = 0; x < syncCanvas.width; x++) {
+        const progress = x / syncCanvas.width;
+        const value = Math.sin(progress * 10 + timestamp * 0.001) * 20;
+        const baseLine = syncCanvas.height / 2;
+        const y = baseLine - value - 10; // Offset to move up
+        
+        syncCtx.lineTo(x, y);
+      }
+      
+      syncCtx.strokeStyle = '#00ffaa';
+      syncCtx.lineWidth = 2;
+      syncCtx.stroke();
+      
+      // Draw sync text
+      syncCtx.fillStyle = '#ff7e00';
+      syncCtx.font = '16px monospace';
+      syncCtx.fillText(Math.floor(80 + Math.sin(timestamp * 0.001) * 10) + '%', 10, 20);
+    }
+    
+    // Draw waveform
+    function drawWaves(timestamp) {
+      waveCtx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
+      
+      // Parameters for sine waves
+      const wave1 = {
+        frequency: 0.02 + Math.sin(timestamp * 0.0001) * 0.005,
+        amplitude: 25 + Math.sin(timestamp * 0.0003) * 5,
+        phase: phaseOffset
+      };
+      
+      const wave2 = {
+        frequency: 0.03,
+        amplitude: 15,
+        phase: phaseOffset * 1.5
+      };
+      
+      // Draw center line
+      waveCtx.beginPath();
+      waveCtx.strokeStyle = 'rgba(255, 126, 0, 0.2)';
+      waveCtx.moveTo(0, waveCanvas.height / 2);
+      waveCtx.lineTo(waveCanvas.width, waveCanvas.height / 2);
+      waveCtx.stroke();
+      
+      // Random glitch generation
+      if (Math.random() < 0.005 || (glitchIntensity > 0 && Math.random() < 0.6)) {
+        glitchIntensity = Math.min(glitchIntensity + Math.random() * 0.5, 1);
+        lastGlitchTime = timestamp;
+      } else if (timestamp - lastGlitchTime > 200) {
+        glitchIntensity = Math.max(glitchIntensity - 0.05, 0);
+      }
+      
+      // Draw first wave
+      waveCtx.beginPath();
+      waveCtx.lineWidth = 2;
+      
+      for (let x = 0; x < waveCanvas.width; x++) {
+        const glitchOffset = (Math.random() - 0.5) * glitchIntensity * 10;
+        
+        // Calculate y for the sine wave
+        const y1 = waveCanvas.height / 2 + 
+                  Math.sin(x * wave1.frequency + wave1.phase) * wave1.amplitude +
+                  (glitchIntensity > 0.5 ? glitchOffset : 0);
+        
+        if (x === 0) {
+          waveCtx.moveTo(x, y1);
+        } else {
+          waveCtx.lineTo(x, y1);
+        }
+      }
+      
+      waveCtx.strokeStyle = '#ff7e00';
+      waveCtx.stroke();
+      
+      // Draw second wave
+      waveCtx.beginPath();
+      
+      for (let x = 0; x < waveCanvas.width; x++) {
+        const glitchOffset = (Math.random() - 0.5) * glitchIntensity * 8;
+        
+        // Calculate y for the sine wave
+        const y2 = waveCanvas.height / 2 + 
+                  Math.sin(x * wave2.frequency + wave2.phase) * wave2.amplitude +
+                  (glitchIntensity > 0.5 ? glitchOffset : 0);
+        
+        if (x === 0) {
+          waveCtx.moveTo(x, y2);
+        } else {
+          waveCtx.lineTo(x, y2);
+        }
+      }
+      
+      waveCtx.strokeStyle = '#00ffaa';
+      waveCtx.globalAlpha = 0.8;
+      waveCtx.stroke();
+      waveCtx.globalAlpha = 1.0;
+      
+      // Update phase
+      phaseOffset += 0.03;
+      amplitude = wave1.amplitude.toFixed(2);
+      document.getElementById('amplitude').innerText = `AMP: ${amplitude}`;
+    }
+    
+    // Animation loop
+    function animate(timestamp) {
+      // Rotate sphere
+      rotation += 0.01;
+      wireframeSphere.rotation.y = rotation;
+      wireframeSphere.rotation.x = rotation * 0.7;
+      innerSphere.rotation.y = rotation * 0.8;
+      innerSphere.rotation.z = rotation * 0.5;
+      
+      // Add subtle pulsing effect
+      const pulse = Math.sin(timestamp * 0.001) * 0.05 + 0.95;
+      wireframeSphere.scale.set(pulse, pulse, pulse);
+      
+      // Update UI
+      updateTime();
+      document.getElementById('rotation').innerText = `ROT: ${(rotation * 57.2958).toFixed(2)}°`;
+      document.getElementById('coordinates').innerText = `POS: X:${(Math.sin(rotation) * 0.2).toFixed(2)} Y:${(Math.cos(rotation) * 0.2).toFixed(2)} Z:${(Math.sin(rotation * 0.5) * 0.2).toFixed(2)}`;
+      
+      // Draw AT field
+      drawATField(timestamp);
+      
+      // Draw sync ratio
+      drawSyncRatio(timestamp);
+      
+      // Draw waves
+      drawWaves(timestamp);
+      
+      // Render scene
+      renderer.render(scene, camera);
+      
+      // Request next frame
+      requestAnimationFrame(animate);
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
+    // Start animation
+    animate(0);
+  </script>
+</body>
+</html>
