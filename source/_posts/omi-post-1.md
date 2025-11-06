@@ -25,7 +25,7 @@ But it feels icky to me to record people without telling them.
 So I defined my boundaries for when to use this. 
 
 1. **Meetings where recording is expected**: Team meetings, client calls, interviews where everyone knows it's being recorded.
-2. **Legal/High Risk Situations**: Any situation where I feel like my life, safety, or legality could be at risk by the situation, it's going on. But this is no different me recording on my phone. This is no different from me pulling out a pen recorder and just recording the situation. If I hit this point, people's comfort no longer matter to me. 
+2. **Legal/High Risk Situations**: Any situation where I feel like my life, safety, or legality could be at risk by the situation, it's going on. But this is no different me recording on my phone. This is no different from me pulling out a pen recorder and just recording the situation. If I hit this point, people's comfort no longer matters to me. 
 
     My safety first, other people's safety second, and then we can make a win-win situation on comfort after those are established. 
 
@@ -42,18 +42,18 @@ So that's fundamentally how I feel about recording people.
 Transformers was assigned to do language to language translation. This can be also verbal to text or text to verbal. Speech to text, and text to speech. This is really, really nice. 
 
 
-I use it all the time when I'm driving, and I get texts. I use my voice to text someone back. To communicate because I don't want to start typing and take away my concentration from monstrous several-ton vehicles that would end my life in less than a second if some other human made a stupid decision. But I can talk into it as if I was calling someone, and it doesn't take as much.
+I use it all the time when I'm driving, and I get texts. I use my voice to text someone back. To communicate because I don't want to start typing and take away my concentration from monstrous, several-ton vehicles that would end my life in less than a second if some other human made a stupid decision. But I can talk into it as if I was calling someone, and it doesn't take as much.
 
 ## The Perspective of Omniscience
 
-A lot of people feel like AI is this weird like, singular pane of presence that knows everything. But LLMs don't. Large Language Models fabricate and lie and hallucinate, with utmost confidence because all that LLMs are, in the end, are probability engines that look at what words are likely to come next based on the input that they have been given, previous words, context, and a bunch of other stuff. But all they do is generate probabilities. 
+A lot of people feel like AI is this weird like, singular pane of presence that knows everything. But LLMs don't. Large Language Models fabricate and lie and hallucinate, with utmost confidence because all that LLMs are, in the end, are probability engines that look at what words are likely to come next based on the input that they have been given (along with previous words, context, and a bunch of other stuff). But all they do is generate probabilities. 
 
 
 And if you ask an LLM to generate and create and synthesize, there *will* be hiccups.  
 
 For me, the usage of AI falls along the core tenets of translation because that's what the transformers algorithm was designed to do. The algorithmic process is designed to do language-to-language translation. You can take that and extract the concept towards speech-to-text, and text-to-speech. Fundamentally, this is language to language, still. Spoken english and written english are two ***entirely*** different languages. Spoken english has emotion and physical gestures and movement and tone and all of these wonderful things we add to speaking such that the words are, at most, 10% of the entire conversation. 
 
-But written english is different. To you, reader, my emotion must be conveyed through imagery, through the expression of emotion with respect to the logical barrier of disconnection from you. I am standing on the other side of your foggy mirror, frantically trying to express to you everything I feel, and all you can see are the brief moments where my hand or face touches the glass. The dimensionality behind who I am and what I feel is lost in translation. 
+But written english is different. To you, reader, my emotion must be conveyed through imagery, through the expression of emotion with respect to the logical barrier of disconnection from you. I am standing on the other side of *your* foggy mirror, frantically trying to express to you everything I feel, and all you can see are the brief moments where my hand or face touches the glass. The dimensionality behind who I am and what I feel is lost in translation. I must communicate to be understood through words and words alone. 
 
 Notice the imagery there? If I am gifted as a writer, I-
 
@@ -72,7 +72,9 @@ Notice the imagery there? If I am gifted as a writer, I-
 
     So let's try again. 
 
-Foggy mirror, right? I'm on one side, and you're on the other. Two different dimensions, if you will, communicating perspectives to one another. If I am gifted as a writer, I can turn that flat, 2 dimensional pane into a facsimile of a 3D space where I convey the gravity and depth and nuance of my thoughts to you, the reader, in a way that the emotion feels 3-dimensional. You experience it as if you were there. You empathize not with the physical space that I'm in (which movies let you experience, even more so with 3D goggles), but rather with the emotional space I'm in. Language is beautiful. And language is still language. 
+Foggy mirror, right? I'm on one side, and you're on the other. Two different dimensions, if you will, communicating perspectives to one another. 
+
+If I am gifted as a writer, I can turn that flat, 2 dimensional pane into a facsimile of a 3D space where I convey the gravity and depth and nuance of my thoughts to you, the reader, in a way that the emotion feels 3-dimensional. You experience it as if you were there. You empathize not with the physical space that I'm in (which movies let you experience, even more so with 3D goggles), but rather with the emotional space I'm in. Language is beautiful. And language is still language. 
 
 I believe, where models fall short, is when you ask them to **Create**. Not logical creations, for AI is good at fixing code and writing stuff and [building front end UIs](/assets/omi-blogpost-stuff/claude-frontend.html). 
 
@@ -95,7 +97,7 @@ Many words to less words (summarization) is not efficient, but can be done fairl
 
 Less words to big words (chatgpt style, inference and response) is the least efficient and where I think we're messing up by going deep into building that aspect.
 
-In my opinion, the failure rates go up significantly when you start asking LLMs to generate and create things from inferences. When you go from less, to more. 
+In my opinion, the failure rates go up significantly when you start asking LLMs to generate and create things from inferences. When you go from less, to more. That's the space of failure for probability. You can't predict what you don't know 100% of the time (yet). But you can look back at what you already do know, and break it apart. Foresight is hard, hindsight is less hard.
 
 Summarization and compacting is, in a lot of ways, destruction. And while time consuming, it can be done by anyone. Creation? Totally different concept.
 
@@ -118,12 +120,12 @@ Remember I typed earlier how spoken english only contains 10% of the entire conv
 
 And that's fine. 
 
-I don't want it to replace anything. I want it to give an overview, just enough, for me to remember what was said, and then I can fill in the blanks. I can fill in the emotion and movement and tone and nuance. Besides, part of the beauty of human memory is that it's flawed. We forget things. We misremember things. We change things. I just don't want to forget the big things. 
+I don't want it to replace anything. I want it to give an overview, just enough, for me to remember what was said, and then I can fill in the blanks. I can fill in the emotion and movement and tone and nuance. Besides, part of the beauty of human memory is that it's flawed. We forget things. We misremember things. We change things. I just don't want to forget the important things. 
 
 
 So here's my thoughts.
 
-I need to build a local transcription engine. I want to minimize overhead, so llama.cpp instead of Ollama (ew!). I get to figure out models to run locally for:
+I get to build a local transcription engine. I want to minimize overhead, so llama.cpp (yay!) instead of Ollama (ew!). I get to figure out models to run locally for:
 
 - Voice Recognition  
 I'm thinking [Whisper-Diarization](https://github.com/MahmoudAshraf97/whisper-diarization) or [Whisper.cpp](https://github.com/ggml-org/whisper.cpp)
@@ -134,13 +136,16 @@ Probably [Canary-Qwen-2.5b](https://huggingface.co/nvidia/canary-qwen-2.5b), [pa
 
 If I use Whisper 3 Turbo, I can use Whisper.cpp too. If I want just english, Parakeet. If I want more than english, Whisper. 
 
-Also depends on what device I'm dropping this on. 
+Also depends on what device I'm dropping this on. More compute means more power, which means I can run bigger models. But it also means more power consumption. And do I really need all of that for my intended use case? 
+
+Probably not. 
+
 - Language Models for Comprehension and Summarization
 Probably whatever the best on the huggingface leaderboard is. Reddit and other places recommend [IBM Granite 3.2 8b Instruct](https://huggingface.co/ibm-granite/granite-3.2-8b-instruct) and some mistral stuff. There's a lot to play around with this.
 - Vector Databases to store and retrieve conversations 
 UGH I have no idea. Vector Databases are used to store and retrieve conversations. I could use pinecone text-embedding-3-large but then I'm making API calls to openAI. I could use [sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) or [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2). Not sure yet.
 
-Omi already provides the [entire codebase](https://github.com/BasedHardware/omi), from the firmware on the device to the app code to the backend. Their documentation includes everything, including the process for setting up the [backend locally](https://docs.omi.me/doc/developer/backend/Backend_Setup). 
+Omi already provides the [entire codebase](https://github.com/BasedHardware/omi), from the firmware on the device to the app code to the backend. Their documentation includes everything, including the [process for setting up the backend locally](https://docs.omi.me/doc/developer/backend/Backend_Setup). 
 
 (Oh, there goes copilot again. Mute.)
 
