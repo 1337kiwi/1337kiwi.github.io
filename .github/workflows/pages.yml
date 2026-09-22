@@ -14,6 +14,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           # If your repository depends on submodule, please see: https://github.com/actions/checkout
           submodules: recursive
+      # Track the theme fork's tip at build time. Deliberately NOT committed:
+      # a workflow that pushes to main makes this remote diverge from the
+      # canonical upstream, and the next push from a workstation is then rejected.
+      - name: Update submodules to remote tips
+        run: git submodule update --init --recursive --remote --force
       - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
