@@ -6,3 +6,7 @@ node_modules/
 public/
 .deploy*/
 _multiconfig.yml
+
+# Drafts: keep the folder, never commit draft contents
+source/_drafts/*
+!source/_drafts/.gitkeep
