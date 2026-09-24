@@ -44,11 +44,9 @@ The tech gifted me this:
 
 ![Gilbarco Veeder-Root Fueling Systems diagnostic card, held against the pump's DEVICE CONFIG screen](/assets/gas/device_config.jpg)
 
-It's a Gilbarco "Fueling Systems" diagnostic card, part #Q12534-170. And **you can just buy it online.** 
+It's a Gilbarco "Fueling Systems" diagnostic card, part #Q12534-170. You can just buy it online which is pretty fun, it's [listed as a part](https://store.senecaco.com/store/c47/miscellaneous-dispenser-parts/p116/gilbarco-q12534-170-diagnostic-card/) in a lot of fuel-equipment stores. 
 
-It's a listed part at fuel-equipment supply stores, and nobody gatekeeps it. [Here's one listing.](https://store.senecaco.com/store/c47/miscellaneous-dispenser-parts/p116/gilbarco-q12534-170-diagnostic-card/)
-
-Swipe it at the pump, where you would normally swipe a credit card, and you drop into a diagnostics and configuration mode. This whole menu tree is documented in Gilbarco's own public FlexPay IV (with Omnia) service manual, if you want to read along. ([MDE-5369V, p.4-3](/assets/gas/flexpay-iv-omnia-service-manual.pdf#page=27)) Here's the DEVICE CONFIG screen from that same photo, with the card held up against it:
+If you swipe it at the pump, where you would normally swipe a credit card you'll drop into a diagnostics and config mode. This whole menu tree is documented in GVR's public [FlexPay IV (with Omnia) service manual](/assets/gas/flexpay-iv-omnia-service-manual.pdf#page=27)Here's the DEVICE CONFIG screen from that same photo, with the card held up against it:
 
 ```
 DEVICE CONFIG
@@ -61,9 +59,7 @@ DEVICE CONFIG
 <7> - DAILY REBOOT PARAMETER
 ```
 
-So from the curb, with a card anyone can order, you get device selection, config for the secure payment module, IP assignment for the other devices on the forecourt, and a "restore default resources" option. 
-
-Let's hope the security cameras work. 
+Let's hope the security cameras work at these gas stations. 
 
 ## The Card Is Just a Magstripe
 
@@ -79,7 +75,7 @@ Track 3: no data
 
 ![Reading the card in a magstripe utility](/assets/gas/magread.png)
 
-That's it. It's a static string on track 1. There's no challenge-response, no second factor auth, and the data is the same on every swipe. The "authentication" for the dispenser's configuration menu is a fixed value on a magstripe, and the magstripe is for sale.
+It's a static string on track 1, and there's no challenge-response, no second factor auth, and the data is the same on every swipe. The "authentication" for the dispenser's configuration menu is a fixed value on a magstripe, and the magstripe is for sale.
 
 Anyone with a $30 reader and a blank HiCo card can clone it. Keep an eye out for me at security conferences :P
 
@@ -93,7 +89,7 @@ nope
 
 It doesn't work, at least not cleanly, because the dispenser doesn't control the price. It constantly pulls from the controller inside the store, also known as the basestation, and the basestation overrules any price you change locally on one pump. 
 
-To make a bogus price stick, you'd have to attack the link between the pump and the basestation instead of the pump itself. That puts you in radio territory, and you need a whole hackrf and if you jam it you gain a couple felonies, and if you override the signal with your own I'm pretty sure the FCC just kills you.
+To make a fake price stick, you'd have to attack the link between the pump and the basestation instead of the pump itself. That puts you in radio territory, and you need a whole hackrf and if you jam it you gain a couple felonies, and if you override the signal with your own I'm pretty sure the FCC just kills you.
 
 Which is good! (The consistent updates, not the FCC killing me) 
 
